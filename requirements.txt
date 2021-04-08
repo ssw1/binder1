@@ -1,3 +1,8 @@
+opencv-python-headless
+scipy
+pillow
+pandas
+peakutils
 matplotlib
-Pillow
-opencv-python 
+plotly
+psutil
