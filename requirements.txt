@@ -1,2 +1,2 @@
 matplotlib==3.2.1
-PIL
+PIL==2.2.2
