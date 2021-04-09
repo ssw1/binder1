@@ -11,7 +11,7 @@ class Visual(object):
         import matplotlib.pyplot as plt
         plt.ion()
 
-        size = 1700
+        size = 1400
 
         if self.rows is None:
             self.rows = board.env_height
@@ -22,7 +22,7 @@ class Visual(object):
             self.fig.patch.set_facecolor('#dddddd')
             self.ax = self.fig.add_subplot(1, 1, 1)
             self.ax.set_facecolor('#dddddd')
-            self.fig.patch.set_visible(True) #False)
+            self.fig.patch.set_visible(False)
             self.ax.axis('off')
             y = []
             x = []
@@ -30,8 +30,10 @@ class Visual(object):
                 for j in range(self.cols):
                     x.append(j)
                     y.append(i)
-            self.ax.scatter(x, y, marker="s", s=size, c='white')
+            self.ax.scatter(x, y, marker="s", s=size, c='#dddddd')
             self.ax.scatter(board.goal[1], board.goal[0], marker="D", s=size//2, c='green')
+            self.ax.scatter(-1, -1, marker="s", s=size, c='white')
+            self.ax.scatter(board.env_width, board.env_height, marker="s", s=size, c='white')
             for x in board.obstacles:
                 self.ax.scatter(x[1], x[0], marker="s", s=size, c='blue')
             assert board.agent is None

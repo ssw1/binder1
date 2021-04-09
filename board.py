@@ -121,7 +121,7 @@ class Board(object):
         self.env_height = shape[0]
         self.env_width = shape[1]
         self.delay = delay
-        self.num_obstacles = (2 * (self.env_height + self.env_width)) // 3
+        self.num_obstacles = (self.env_height + self.env_width)
         self.stop_at_goal = stop_at_goal
         self.action_space = ['U', 'D', 'L', 'R']
         self.n_actions = len(self.action_space)
