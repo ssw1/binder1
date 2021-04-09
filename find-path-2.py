@@ -2,7 +2,7 @@ import sys
 from visual import Visual
 from main_loop import run_example
 
-vis = Visual()
+vis = Visual(True)
 
 # Commands to be implemented after running this file
 if __name__ == "__main__":

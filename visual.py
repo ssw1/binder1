@@ -1,50 +1,59 @@
+import matplotlib.pyplot as plt
+from IPython import display
+import numpy as np
 
 class Visual(object):
 
-    def __init__(self):
+    def __init__(self, local=False):
         self.cells = []
         self.rows = None
         self.cols = None
-        self.agent = None
+        self.agent = (0, 0)
+        self.save = {}
+        self.local = local
 
     def imshow(self, board):
-        import matplotlib.pyplot as plt
-        plt.ion()
 
-        size = 1400
+        def bg(i, j):
+            x = (j + i % 2) % 2
+            return x * 10 + 244
 
+        size = 1000
+
+        col_obs = [0, 66, 120]
+        col_dest = [0, 200, 33]
         if self.rows is None:
             self.rows = board.env_height
             self.cols = board.env_width
-            self.fig = plt.figure(1)
-            self.fig.set_figheight(self.rows)
-            self.fig.set_figwidth(self.cols)
-            self.fig.patch.set_facecolor('#dddddd')
-            self.ax = self.fig.add_subplot(1, 1, 1)
-            self.ax.set_facecolor('#dddddd')
-            self.fig.patch.set_visible(False)
-            self.ax.axis('off')
-            y = []
-            x = []
-            for i in range(self.rows):
-                for j in range(self.cols):
-                    x.append(j)
-                    y.append(i)
-            self.ax.scatter(x, y, marker="s", s=size, c='#dddddd')
-            self.ax.scatter(board.goal[1], board.goal[0], marker="D", s=size//2, c='green')
-            self.ax.scatter(-1, -1, marker="s", s=size, c='white')
-            self.ax.scatter(board.env_width, board.env_height, marker="s", s=size, c='white')
-            for x in board.obstacles:
-                self.ax.scatter(x[1], x[0], marker="s", s=size, c='blue')
-            assert board.agent is None
-            assert self.agent is None
+            self.image = np.zeros((self.rows, self.cols, 3), dtype=np.uint8)
+            for ir, r in enumerate(self.image):
+                for ic, c in enumerate(r):
+                    self.image[ir, ic] = bg(ir, ic)
+            for c in board.obstacles:
+                self.image[c] = col_obs
+                self.save[c] = col_obs
+            self.image[board.goal] = col_dest
+            self.save[board.goal] = col_dest
+        if board.agent:
+            old = bg(self.agent[0], self.agent[1])
+            if self.agent in self.save:
+                old = self.save[self.agent]
+            self.image[self.agent] = old
+            self.image[board.agent.state[0], board.agent.state[1]] = [255, 40, 0]
+            self.agent = tuple(board.agent.state)
+
+        if self.local:
+            import cv2
+            dims = (self.image.shape[1]*100, self.image.shape[0]*100)
+            img = cv2.cvtColor(self.image, cv2.COLOR_RGB2BGR)
+            resized = cv2.resize(img, dims, interpolation=cv2.INTER_NEAREST)
+            cv2.imshow('Board', resized)
+            cv2.waitKey(1)
             return
 
-        if board.agent:
-            if self.agent is None:
-                self.agent = self.ax.scatter([0], [0], marker="o", c='red', s=size)
-            else:
-                self.agent.set_offsets(list(reversed(board.agent.state)))
+        display.clear_output(wait=True)
+        plt.imshow(self.image, interpolation='none')
         plt.pause(.0001)
-        return
 
+
+display.clear_output(wait=True)
