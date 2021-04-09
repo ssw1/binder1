@@ -45,16 +45,6 @@ class Visual(object):
                 self.agent = self.ax.scatter([0], [0], marker="o", c='red', s=size)
             else:
                 self.agent.set_offsets(list(reversed(board.agent.state)))
-
-        #plt.show()
         plt.pause(.0001)
-        return
-
-        import cv2
-
-
-        im_bgr = cv2.cvtColor(im, cv2.COLOR_RGB2BGR)
-        cv2.imshow('Board', im_bgr)
-        cv2.waitKey(1)
         return
 
