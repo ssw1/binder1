@@ -121,11 +121,12 @@ class Board(object):
         self.env_height = shape[0]
         self.env_width = shape[1]
         self.delay = delay
-        self.num_obstacles = self.env_height + self.env_width
+        self.num_obstacles = (2 * (self.env_height + self.env_width)) // 3
         self.stop_at_goal = stop_at_goal
         self.action_space = ['U', 'D', 'L', 'R']
         self.n_actions = len(self.action_space)
         self.display = BoardDisplay(self, 24, vis)
+        self.agent = None
         #self.title('Path Following')
         #self.geometry('{0}x{1}'.format(self.env_width * self.pixels, self.env_height * self.pixels))
         self.build_environment()
@@ -148,14 +149,16 @@ class Board(object):
 
     def _create_obstacle(self, state):
         self._add_object(None, state, '#88bbdd')
-        self.coords_obstacles.append(state)
+        self.obstacles.append(state)
 
     def _add_obstacles(self):
         # Creating a list of random obstacles
-        self.coords_obstacles = []
+        self.obstacles = []
         for oi in range(self.num_obstacles):
-            row, col = (random.randint(0, self.env_width), random.randint(0, self.env_width))
+            col, row = (random.randint(0, self.env_width-1), random.randint(0, self.env_height-1))
             if (row, col) == (0, 0):
+                continue
+            if (row, col) == self.goal:
                 continue
             self._create_obstacle((row, col),)
 
@@ -174,10 +177,10 @@ class Board(object):
         self.goal = (row, col)
 
     def build_environment(self):
-        # Add a few random obstacles
-        self._add_obstacles()
         # Create goal
         self._add_goal()
+        # Add a few random obstacles
+        self._add_obstacles()
 
     # Function to reset the environment and start new Episode
     def reset(self):
@@ -268,7 +271,7 @@ class Board(object):
             if len(self.d) > self.longest:
                 self.longest = len(self.d)
 
-        elif next_state in self.coords_obstacles:
+        elif next_state in self.obstacles:
 
             reward = -1
             done = True

@@ -133,4 +133,7 @@ class QLearningTable:
         plt.ylabel('Cost')
         '''
         # Showing the plots
+        plt.ioff()
         plt.show()
+
+        return
