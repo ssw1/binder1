@@ -19,14 +19,6 @@ def hex_to_rgb(value):
     lv = len(value)
     return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
 
-class Visual(object):
-    @staticmethod
-    def imshow(im):
-        import cv2
-        im_bgr = cv2.cvtColor(im, cv2.COLOR_RGB2BGR)
-        cv2.imshow('Board', im_bgr)
-        cv2.waitKey(1)
-        return
 
 class BoardObject(object):
 
@@ -66,13 +58,14 @@ class BoardDisplay(object):
         y = p[1] * px + px // 2
         return x, y
 
-    def __init__(self, board, pixels):
+    def __init__(self, board, pixels, vis):
         self.board = board
         self.pixels = pixels
         self.image = np.zeros([2] + [a*pixels for a in board.shape] + [3], dtype=np.uint8)
         self.image[0] += 255
         self.image[0, :, ::pixels] = 22
         self.image[0, ::pixels, :] = 22
+        self.vis = vis
         self.objects = {}
 
     def color_area(self, x, y, color, layer=0, mask=1):
@@ -85,7 +78,7 @@ class BoardDisplay(object):
 
     def update(self):
         img = self.image[0] * (self.image[1] == 0) + self.image[1]
-        Visual.imshow(img)
+        self.vis.imshow(img)
 
     def add_object(self, name, state, color, layer=0, style=None, keep=False):
         def _make_name():
@@ -123,7 +116,7 @@ class Environment(object):
 # Creating class for the environment
 class Board(object):
 
-    def __init__(self, shape=(10, 10), delay=0.02, stop_at_goal=False):
+    def __init__(self, shape=(10, 10), delay=0.02, stop_at_goal=False, vis=None):
         super().__init__()
         self.shape = shape
         self.env_height = shape[0]
@@ -133,7 +126,7 @@ class Board(object):
         self.stop_at_goal = stop_at_goal
         self.action_space = ['U', 'D', 'L', 'R']
         self.n_actions = len(self.action_space)
-        self.display = BoardDisplay(self, 24)
+        self.display = BoardDisplay(self, 24, vis)
         #self.title('Path Following')
         #self.geometry('{0}x{1}'.format(self.env_width * self.pixels, self.env_height * self.pixels))
         self.build_environment()

@@ -1,12 +1,9 @@
-import sys
-import os
-import matplotlib.pyplot as plt
 
 from board import Board
 from agent import QLearningTable
 
 
-def update(max_episodes=100, stop_at_goal=False):
+def update(env, q, max_episodes=100, stop_at_goal=False):
     # Resulted list for the plotting Episodes via Steps
     steps = []
 
@@ -62,28 +59,8 @@ def update(max_episodes=100, stop_at_goal=False):
     q.plot_results(steps, all_costs)
 
 
-# Commands to be implemented after running this file
-if __name__ == "__main__":
-
-    delay = None
-    episodes = 55
-    grid = (6, 8)
-    stop_at_goal = False
-    for a in sys.argv[1:]:
-        if a == '-h' or a == '--help':
-            print('\nusage: python(3) main.py [delay=d][episodes=e][grid=RxC]\n')
-            sys.exit()
-        if a == '-s' or a == '--stop':
-            stop_at_goal = True
-            continue
-        opt, val = a.split('=')
-        if opt == '-d' or opt == '--delay':
-            delay = float(val)
-        if opt == '-e' or opt == '--episodes':
-            episodes = int(val)
-        if opt == '-g' or opt == '--grid':
-            grid = tuple(map(int, val.split('x')))
-
-    env = Board(grid, delay, stop_at_goal)
+def run_example(grid=(7, 9), episodes=100, stop_at_goal=False, delay=None, vis=None):
+    env = Board(grid, delay, stop_at_goal, vis)
     q = QLearningTable(actions=list(range(env.n_actions)))
-    update(episodes)
+    update(env, q, episodes)
+
