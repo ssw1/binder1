@@ -77,8 +77,7 @@ class BoardDisplay(object):
         self.image[layer, y:y+self.pixels, x:x+1] = 22
 
     def update(self):
-        img = self.image[0] * (self.image[1] == 0) + self.image[1]
-        self.vis.imshow(img)
+        self.vis.imshow(self.board)
 
     def add_object(self, name, state, color, layer=0, style=None, keep=False):
         def _make_name():
