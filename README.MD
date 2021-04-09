@@ -8,7 +8,7 @@ One agent tries to reach its target starting from the (0, 0) cell.
 
 ## Algorithm Outline
 
-The Q-table is intialized (show TBD)
+The Q-table is intialized (show TBD).
 
   * For each episode _e_ (from _1_ to _N_)
      - New actions are attempted until either the target or an obstacle areasdf
