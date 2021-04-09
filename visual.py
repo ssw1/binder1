@@ -44,7 +44,8 @@ class Visual(object):
 
         if self.local:
             import cv2
-            dims = (self.image.shape[1]*100, self.image.shape[0]*100)
+            ratio = (self.image.shape[1]) / (self.image.shape[0])
+            dims = (int(333*ratio), 333)
             img = cv2.cvtColor(self.image, cv2.COLOR_RGB2BGR)
             resized = cv2.resize(img, dims, interpolation=cv2.INTER_NEAREST)
             cv2.imshow('Board', resized)

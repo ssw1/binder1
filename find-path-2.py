@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     delay = None
     episodes = 55
-    grid = (7, 9)
+    grid = (12, 20)
     stop_at_goal = False
     for a in sys.argv[1:]:
         if a == '-h' or a == '--help':
