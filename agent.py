@@ -90,7 +90,14 @@ class QLearningTable:
         print()
         print('Length of full Q-table =', len(self.q_table.index))
         print('Full Q-table:')
-        print(self.q_table)
+
+        def show_table(q):
+            try:
+                from IPython.display import HTML
+                display(HTML(q.to_html()))
+            except:
+                print(self.q_table)
+        show_table(self.q_table)
 
     # Plotting the results for the number of steps
     def plot_results(self, steps, cost):
