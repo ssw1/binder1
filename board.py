@@ -126,7 +126,7 @@ class Board(object):
         self.stop_at_goal = stop_at_goal
         self.action_space = ['U', 'D', 'L', 'R']
         self.n_actions = len(self.action_space)
-        self.display = BoardDisplay(self, 24, vis)
+        self.display = BoardDisplay(self, 16, vis)
         #self.title('Path Following')
         #self.geometry('{0}x{1}'.format(self.env_width * self.pixels, self.env_height * self.pixels))
         self.build_environment()
