@@ -94,6 +94,7 @@ class QLearningTable:
 
     # Plotting the results for the number of steps
     def plot_results(self, steps, cost):
+        plt.rcParams['figure.dpi'] = 100
         f, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(20, 6))
         #
         ax1.plot(np.arange(len(steps)), steps, 'b')
