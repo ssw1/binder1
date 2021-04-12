@@ -12,7 +12,7 @@ class Visual(object):
         self.save = {}
         self.local = local
 
-    def imshow(self, board):
+    def imshow(self, board, text=None):
 
         def bg(i, j):
             x = (j + i % 2) % 2
@@ -43,6 +43,7 @@ class Visual(object):
         for c in board.path:
             self.image[c] = col_path
             self.save[c] = col_path
+
         if self.local:
             import cv2
             ratio = (self.image.shape[1]) / (self.image.shape[0])
@@ -55,6 +56,7 @@ class Visual(object):
 
         display.clear_output(wait=True)
         plt.imshow(self.image, interpolation='none')
+        plt.text(0, -1, text)
         plt.pause(.0001)
 
 
