@@ -32,7 +32,7 @@ def improve_table(env, q, episodes=100, stop_at_goal=False):
     q.print_q_table()  # Show final Q-table
     q.plot_results(steps, all_costs)  # Plot stats
 
-def run_example(grid=(7, 9), episodes=100, stop_at_goal=False, delay=None, vis=None):
+def run_example(grid=[(7, 9)], episodes=100, stop_at_goal=False, delay=None, vis=None):
     env = Board(grid, delay, stop_at_goal, vis)
     q = QLearningTable(actions=list(range(env.n_actions)))
     improve_table(env, q, episodes)

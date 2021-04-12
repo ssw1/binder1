@@ -115,21 +115,18 @@ class Environment(object):
 # Creating class for the environment
 class Board(object):
 
-    def __init__(self, shape=(10, 10), delay=0.02, stop_at_goal=False, vis=None):
+    def __init__(self, grid=[(10, 10)], delay=0.02, stop_at_goal=False, vis=None):
         super().__init__()
-        self.shape = shape
-        self.env_height = shape[0]
-        self.env_width = shape[1]
+        self.shape = grid[0]
+        self.env_height = grid[0][0]
+        self.env_width = grid[0][1]
         self.delay = delay
-        self.num_obstacles = (self.env_height + self.env_width)
         self.stop_at_goal = stop_at_goal
         self.action_space = ['U', 'D', 'L', 'R']
         self.n_actions = len(self.action_space)
         self.display = BoardDisplay(self, 24, vis)
         self.agent = None
-        #self.title('Path Following')
-        #self.geometry('{0}x{1}'.format(self.env_width * self.pixels, self.env_height * self.pixels))
-        self.build_environment()
+        self.build_environment(grid[1:])
 
         # Dictionaries to draw the final route
         self.d = {}
@@ -151,16 +148,22 @@ class Board(object):
         self._add_object(None, state, '#88bbdd')
         self.obstacles.append(state)
 
-    def _add_obstacles(self):
+    def _add_obstacles(self, obstacles):
         # Creating a list of random obstacles
         self.obstacles = []
-        for oi in range(self.num_obstacles):
-            col, row = (random.randint(0, self.env_width-1), random.randint(0, self.env_height-1))
-            if (row, col) == (0, 0):
-                continue
-            if (row, col) == self.goal:
-                continue
-            self._create_obstacle((row, col),)
+        if obstacles is None:
+            self.num_obstacles = (self.env_height + self.env_width)
+            for oi in range(self.num_obstacles):
+                col, row = (random.randint(0, self.env_width-1), random.randint(0, self.env_height-1))
+                if (row, col) == (0, 0):
+                    continue
+                if (row, col) == self.goal:
+                    continue
+                self._create_obstacle((row, col),)
+        else:
+            self.num_obstacles = len(obstacles)
+            for o in obstacles:
+                self._create_obstacle(o)
 
     def _add_object(self, name, state, color, layer=0, style=None):
         return self.display.add_object(name, state, color, layer, style)
@@ -170,17 +173,22 @@ class Board(object):
         obj = self._add_object(name, state, color='#FF3455', layer=1, style='circle')
         self.agent = Agent(name, state, obj)
 
-    def _add_goal(self):
-        row = int(self.env_height * 4/5)
-        col = int(self.env_width * 4/5)
+    def _add_goal(self, goal):
+        if goal is None:
+            row = int(self.env_height * 4/5)
+            col = int(self.env_width * 4/5)
+        else:
+            row, col = goal
         self.display.add_object('Goal', (row, col), '#22ee00')
         self.goal = (row, col)
 
-    def build_environment(self):
+    def build_environment(self, grid_data):
+        goal = None if len(grid_data) < 1 else grid_data[0]
+        obstacles = None if len(grid_data) < 2 else grid_data[1]
         # Create goal
-        self._add_goal()
+        self._add_goal(goal)
         # Add a few random obstacles
-        self._add_obstacles()
+        self._add_obstacles(obstacles)
 
     # Function to reset the environment and start new Episode
     def reset(self):
