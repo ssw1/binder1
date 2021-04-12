@@ -27,4 +27,3 @@ if __name__ == "__main__":
             grid = tuple(map(int, val.split('x')))
     run_example(grid, episodes, vis=vis)
 
-
