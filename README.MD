@@ -1,7 +1,7 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ssw1/binder1/HEAD)
 
 
-<a href="https://mybinder.org/v2/gh/ssw1/binder1/HEAD" target="_blank">https://mybinder.org/badge_logo.svg)</a>
+<a href="https://mybinder.org/v2/gh/ssw1/binder1/HEAD" target="_blank"><img alt="Binder" src="https://mybinder.org/badge_logo.svg"></a>
 
 # Q-Table Example
 
