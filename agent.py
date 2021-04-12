@@ -32,7 +32,7 @@ class QLearningTable:
             action = state_action.idxmax()
         else:
             # Choosing random action - left 10 % for choosing randomly
-            action = np.random.choice(self.actions)
+            action = np.random.choice(self.actions) 
         return action
 
     # Function for learning and updating Q-table with new knowledge
