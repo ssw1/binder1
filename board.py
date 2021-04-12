@@ -281,6 +281,7 @@ class Board(object):
             self.d = {}
             self.i = 0
 
+
         else:
             reward = 0
             done = False
