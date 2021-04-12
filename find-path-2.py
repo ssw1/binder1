@@ -8,8 +8,9 @@ vis = Visual(True)
 if __name__ == "__main__":
 
     delay = None
-    episodes = 55
-    grid = [(12, 20)] #, (3, 3), [(2, 4)]]
+    episodes = 111
+    #grid = [(4, 5), (3, 3), [(2, 4)]]
+    grid = [(10, 12)]
     stop_at_goal = False
     for a in sys.argv[1:]:
         if a == '-h' or a == '--help':
@@ -25,5 +26,5 @@ if __name__ == "__main__":
             episodes = int(val)
         if opt == '-g' or opt == '--grid':
             grid = tuple(map(int, val.split('x')))
-    run_example(grid, episodes, vis=vis) 
+    run_example(grid, episodes, vis=vis)
 

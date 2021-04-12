@@ -127,6 +127,7 @@ class Board(object):
         self.display = BoardDisplay(self, 24, vis)
         self.agent = None
         self.build_environment(grid[1:])
+        self.path = []
 
         # Dictionaries to draw the final route
         self.d = {}
@@ -316,14 +317,19 @@ class Board(object):
         s = (0, 0)
 
         # Filling the route
-        self.display.add_object(None, s, color=color, layer=1, style='circle', keep=True)
+
+        self._add_object(None, s, '#cccc00')
+        self.path.append(s)
         for j in range(len(self.f)):
             # Showing the coordinates of the final route
             s = self.f[j]
             print(s)
-            self.display.add_object(None, s, color=color, layer=1, style='circle', keep=True)
+            self.path.append(s)
+            self._add_object(None, s, '#cccc00')
             self.render()
             a[j] = self.f[j]
+        import matplotlib.pyplot as plt
+        plt.show()
         return
 
 

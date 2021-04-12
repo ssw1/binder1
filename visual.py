@@ -18,10 +18,9 @@ class Visual(object):
             x = (j + i % 2) % 2
             return x * 10 + 244
 
-        size = 1000
-
         col_obs = [0, 66, 120]
         col_dest = [0, 200, 33]
+        col_path = [150, 150, 0]
         if self.rows is None:
             self.rows = board.env_height
             self.cols = board.env_width
@@ -41,7 +40,9 @@ class Visual(object):
             self.image[self.agent] = old
             self.image[board.agent.state[0], board.agent.state[1]] = [255, 40, 0]
             self.agent = tuple(board.agent.state)
-
+        for c in board.path:
+            self.image[c] = col_path
+            self.save[c] = col_path
         if self.local:
             import cv2
             ratio = (self.image.shape[1]) / (self.image.shape[0])
