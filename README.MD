@@ -3,6 +3,9 @@
 
 <a href="https://mybinder.org/v2/gh/ssw1/binder1/HEAD" target="_blank"><img alt="Binder" src="https://mybinder.org/badge_logo.svg"></a>
 
+
+<a onclick="window.open('https://mybinder.org/v2/gh/ssw1/binder1/HEAD', ''); return false" href="javascript:void(0);"><img alt="Binder" src="https://mybinder.org/badge_logo.svg"></a>
+
 # Q-Table Example
 
 ## Overview
