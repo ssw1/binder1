@@ -36,4 +36,3 @@ def run_example(grid=(7, 9), episodes=100, stop_at_goal=False, delay=None, vis=N
     env = Board(grid, delay, stop_at_goal, vis)
     q = QLearningTable(actions=list(range(env.n_actions)))
     improve_table(env, q, episodes)
-

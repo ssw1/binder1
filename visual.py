@@ -58,3 +58,4 @@ class Visual(object):
 
 
 display.clear_output(wait=True)
+
