@@ -25,6 +25,6 @@ if __name__ == "__main__":
         if opt == '-e' or opt == '--episodes':
             episodes = int(val)
         if opt == '-g' or opt == '--grid':
-            grid = tuple(map(int, val.split('x')))
+            grid = [tuple(map(int, val.split('x')))]
     run_example(grid, episodes, vis=vis)
 
